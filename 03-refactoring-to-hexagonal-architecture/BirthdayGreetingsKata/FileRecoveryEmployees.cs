@@ -5,9 +5,16 @@ namespace BirthdayGreetingsKata;
 
 public class FileRecoveryEmployees
 {
-    public List<Employee> GetEmployees(string fileName)
+    private readonly string _fileName;
+
+    public FileRecoveryEmployees(string fileName)
     {
-        using var reader = new StreamReader(fileName);
+        _fileName = fileName;
+    }
+
+    public List<Employee> Get()
+    {
+        using var reader = new StreamReader(_fileName);
         var str = "";
         str = reader.ReadLine(); // skip header
         

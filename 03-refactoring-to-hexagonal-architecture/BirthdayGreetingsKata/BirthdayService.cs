@@ -5,12 +5,11 @@ namespace BirthdayGreetingsKata;
 
 public class BirthdayService
 {
-    private readonly FileRecoveryEmployees _fileRecoveryEmployees = new();
-
     public void SendGreetings(string fileName, OurDate ourDate,
         string smtpHost, int smtpPort)
     {
-        var employees = _fileRecoveryEmployees.GetEmployees(fileName);
+        var fileRecoveryEmployees = new FileRecoveryEmployees(fileName);
+        var employees = fileRecoveryEmployees.Get();
 
         foreach (var employee in employees)
         {
