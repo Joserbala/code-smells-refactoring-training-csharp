@@ -3,7 +3,7 @@ using System.IO;
 
 namespace BirthdayGreetingsKata;
 
-public class FileRecoveryEmployees
+public class FileRecoveryEmployees : RecoveryEmployees
 {
     private readonly string _fileName;
 
