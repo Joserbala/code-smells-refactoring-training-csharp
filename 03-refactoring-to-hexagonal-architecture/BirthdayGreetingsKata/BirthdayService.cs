@@ -10,6 +10,24 @@ public class BirthdayService
     public void SendGreetings(string fileName, OurDate ourDate,
         string smtpHost, int smtpPort)
     {
+        var employees = GetEmployees(fileName);
+
+        foreach (var employee in employees)
+        {
+            if (employee.IsBirthday(ourDate))
+            {
+                var recipient = employee.Email;
+                var body = "Happy Birthday, dear %NAME%!".Replace("%NAME%",
+                    employee.FirstName);
+                var subject = "Happy Birthday!";
+                SendMessage(smtpHost, smtpPort, "sender@here.com", subject,
+                    body, recipient);
+            }
+        }
+    }
+
+    private List<Employee> GetEmployees(string fileName)
+    {
         using var reader = new StreamReader(fileName);
         var str = "";
         str = reader.ReadLine(); // skip header
@@ -25,18 +43,7 @@ public class BirthdayService
             employees.Add(employee);
         }
 
-        foreach (var employee in employees)
-        {
-            if (employee.IsBirthday(ourDate))
-            {
-                var recipient = employee.Email;
-                var body = "Happy Birthday, dear %NAME%!".Replace("%NAME%",
-                    employee.FirstName);
-                var subject = "Happy Birthday!";
-                SendMessage(smtpHost, smtpPort, "sender@here.com", subject,
-                    body, recipient);
-            }
-        }
+        return employees;
     }
 
     private void SendMessage(string smtpHost, int smtpPort, string sender,
