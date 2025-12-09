@@ -1,16 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
 using System.Net.Mail;
 
 namespace BirthdayGreetingsKata;
 
 public class BirthdayService
 {
+    private readonly FileRecoveryEmployees _fileRecoveryEmployees = new();
+
     public void SendGreetings(string fileName, OurDate ourDate,
         string smtpHost, int smtpPort)
     {
-        var employees = GetEmployees(fileName);
+        var employees = _fileRecoveryEmployees.GetEmployees(fileName);
 
         foreach (var employee in employees)
         {
@@ -24,26 +24,6 @@ public class BirthdayService
                     body, recipient);
             }
         }
-    }
-
-    private List<Employee> GetEmployees(string fileName)
-    {
-        using var reader = new StreamReader(fileName);
-        var str = "";
-        str = reader.ReadLine(); // skip header
-        
-        var employees = new List<Employee>();
-        
-        while ((str = reader.ReadLine()) != null)
-        {
-            var employeeData = str.Split(", ");
-            var employee = new Employee(employeeData[1], employeeData[0],
-                employeeData[2], employeeData[3]);
-            
-            employees.Add(employee);
-        }
-
-        return employees;
     }
 
     private void SendMessage(string smtpHost, int smtpPort, string sender,
