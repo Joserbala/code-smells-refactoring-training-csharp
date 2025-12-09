@@ -14,7 +14,8 @@ public class AcceptanceTest
     {
         private readonly List<MailMessage> _messages;
 
-        public BirthdayServiceForTesting(List<MailMessage> messages, FileRecoveryEmployees fileRecoveryEmployees) : base(fileRecoveryEmployees)
+        public BirthdayServiceForTesting(List<MailMessage> messages, FileRecoveryEmployees fileRecoveryEmployees) :
+            base(fileRecoveryEmployees)
         {
             _messages = messages;
         }

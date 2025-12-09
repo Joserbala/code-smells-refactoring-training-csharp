@@ -65,7 +65,7 @@ public class BirthdayService
         var service = new BirthdayService(new FileRecoveryEmployees(fileName));
         try
         {
-            service.SendGreetings( new OurDate(new DateTime(2008,10,08)), "localhost", 25);
+            service.SendGreetings(new OurDate(new DateTime(2008, 10, 08)), "localhost", 25);
         }
         catch (Exception e)
         {

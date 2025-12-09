@@ -18,15 +18,15 @@ public class FileRecoveryEmployees : RecoveryEmployees
         using var reader = new StreamReader(_fileName);
         var str = "";
         str = reader.ReadLine(); // skip header
-        
+
         var employees = new List<Employee>();
-        
+
         while ((str = reader.ReadLine()) != null)
         {
             var employeeData = str.Split(", ");
             var employee = new Employee(employeeData[1], employeeData[0],
                 CreateOurDate(employeeData), employeeData[3]);
-            
+
             employees.Add(employee);
         }
 
