@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Net.Mail;
 
@@ -12,11 +13,20 @@ public class BirthdayService
         using var reader = new StreamReader(fileName);
         var str = "";
         str = reader.ReadLine(); // skip header
+        
+        var employees = new List<Employee>();
+        
         while ((str = reader.ReadLine()) != null)
         {
             var employeeData = str.Split(", ");
             var employee = new Employee(employeeData[1], employeeData[0],
                 employeeData[2], employeeData[3]);
+            
+            employees.Add(employee);
+        }
+
+        foreach (var employee in employees)
+        {
             if (employee.IsBirthday(ourDate))
             {
                 var recipient = employee.Email;
