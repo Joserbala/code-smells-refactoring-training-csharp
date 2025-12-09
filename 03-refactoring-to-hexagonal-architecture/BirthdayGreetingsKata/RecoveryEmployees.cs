@@ -4,5 +4,5 @@ namespace BirthdayGreetingsKata;
 
 public interface RecoveryEmployees
 {
-    List<Employee> Get();
+    List<Employee> GetAll();
 }

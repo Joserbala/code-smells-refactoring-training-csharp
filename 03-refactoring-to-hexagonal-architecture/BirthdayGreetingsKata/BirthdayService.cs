@@ -5,11 +5,17 @@ namespace BirthdayGreetingsKata;
 
 public class BirthdayService
 {
-    public void SendGreetings(string fileName, OurDate ourDate,
+    private RecoveryEmployees _recoveryEmployees;
+
+    public BirthdayService(RecoveryEmployees recoveryEmployees)
+    {
+        _recoveryEmployees = recoveryEmployees;
+    }
+
+    public void SendGreetings(OurDate ourDate,
         string smtpHost, int smtpPort)
     {
-        var fileRecoveryEmployees = new FileRecoveryEmployees(fileName);
-        var employees = fileRecoveryEmployees.Get();
+        var employees = _recoveryEmployees.GetAll();
 
         foreach (var employee in employees)
         {
@@ -55,11 +61,11 @@ public class BirthdayService
 
     static void Main(string[] args)
     {
-        var service = new BirthdayService();
+        var fileName = "employee_data.txt";
+        var service = new BirthdayService(new FileRecoveryEmployees(fileName));
         try
         {
-            service.SendGreetings("employee_data.txt",
-                new OurDate("2008/10/08"), "localhost", 25);
+            service.SendGreetings(new OurDate("2008/10/08"), "localhost", 25);
         }
         catch (Exception e)
         {

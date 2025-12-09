@@ -12,7 +12,7 @@ public class FileRecoveryEmployees : RecoveryEmployees
         _fileName = fileName;
     }
 
-    public List<Employee> Get()
+    public List<Employee> GetAll()
     {
         using var reader = new StreamReader(_fileName);
         var str = "";
