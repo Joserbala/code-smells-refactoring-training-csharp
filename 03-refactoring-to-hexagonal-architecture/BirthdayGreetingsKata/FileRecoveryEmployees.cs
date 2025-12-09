@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 
@@ -24,11 +25,16 @@ public class FileRecoveryEmployees : RecoveryEmployees
         {
             var employeeData = str.Split(", ");
             var employee = new Employee(employeeData[1], employeeData[0],
-                employeeData[2], employeeData[3]);
+                CreateOurDate(employeeData), employeeData[3]);
             
             employees.Add(employee);
         }
 
         return employees;
+    }
+
+    private static OurDate CreateOurDate(string[] employeeData)
+    {
+        return new OurDate(DateTime.ParseExact(employeeData[2], "yyyy/MM/dd", null));
     }
 }
