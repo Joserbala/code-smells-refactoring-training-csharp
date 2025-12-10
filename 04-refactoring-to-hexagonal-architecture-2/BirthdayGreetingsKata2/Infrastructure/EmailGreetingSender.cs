@@ -21,6 +21,12 @@ public class EmailGreetingSender : IGreetingSender {
             Send(MailMessageFrom(greeting));
         }
     }
+    
+    // made protected for testing :-(
+    protected virtual void Send(MailMessage msg)
+    {
+        new SmtpClient(_smtpHost, _smtpPort).Send(msg);
+    }
 
     private MailMessage MailMessageFrom(GreetingMessage greeting) {
         var msg = new MailMessage
@@ -31,11 +37,5 @@ public class EmailGreetingSender : IGreetingSender {
         };
         msg.To.Add(greeting.To());
         return msg;
-    }
-
-    // made protected for testing :-(
-    protected virtual void Send(MailMessage msg)
-    {
-        new SmtpClient(_smtpHost, _smtpPort).Send(msg);
     }
 }
