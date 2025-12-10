@@ -19,7 +19,7 @@ public class AcceptanceTest
 
     private class MessageSenderForTesting : EmailMessageSender
     {
-        private List<MailMessage> _messagesSent;
+        private readonly List<MailMessage> _messagesSent;
 
         public MessageSenderForTesting(List<MailMessage> messagesSent)
         {
