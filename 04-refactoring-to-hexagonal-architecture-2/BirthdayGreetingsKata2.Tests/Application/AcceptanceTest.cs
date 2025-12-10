@@ -3,10 +3,7 @@ using System.Net.Mail;
 using BirthdayGreetingsKata2.Application;
 using BirthdayGreetingsKata2.Core;
 using BirthdayGreetingsKata2.Infrastructure;
-using BirthdayGreetingsKata2.Infrastructure.Repositories;
-using BirthdayGreetingsKata2.Tests.helpers;
 using NSubstitute;
-using NSubstitute.Extensions;
 using NUnit.Framework;
 using static BirthdayGreetingsKata2.Tests.helpers.OurDateFactory;
 
