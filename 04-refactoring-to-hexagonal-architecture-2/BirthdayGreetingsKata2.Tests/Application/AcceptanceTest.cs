@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using BirthdayGreetingsKata2.Application;
-using BirthdayGreetingsKata2.Core;
 using BirthdayGreetingsKata2.Infrastructure;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
 using NUnit.Framework;
@@ -17,22 +16,6 @@ public class AcceptanceTest
     private List<MailMessage> _messagesSent;
     private BirthdayService _service;
     private const string EmployeesFilePath = "Application/employee_data.txt";
-
-    private class BirthdayServiceForTesting : BirthdayService
-    {
-        private readonly List<MailMessage> _messages;
-
-        public BirthdayServiceForTesting(List<MailMessage> messages, IEmployeesRepository employeesRepository, EmailMessageSender messageSender) : base(
-            employeesRepository, messageSender)
-        {
-            _messages = messages;
-        }
-
-        protected override void SendMessage(MailMessage msg, SmtpClient smtpClient)
-        {
-            _messages.Add(msg);
-        }
-    }
 
     private class MessageSenderForTesting : EmailMessageSender
     {
@@ -54,8 +37,7 @@ public class AcceptanceTest
     {
         _messagesSent = new List<MailMessage>();
         var messageSenderForTesting = new MessageSenderForTesting(_messagesSent);
-        _service = new BirthdayServiceForTesting(_messagesSent,
-            new FileEmployeesRepository(EmployeesFilePath), messageSenderForTesting);
+        _service = new BirthdayService(new FileEmployeesRepository(EmployeesFilePath), messageSenderForTesting);
     }
 
     [Test]
