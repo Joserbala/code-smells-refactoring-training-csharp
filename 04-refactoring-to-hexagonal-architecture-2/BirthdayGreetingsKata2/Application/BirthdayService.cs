@@ -63,7 +63,7 @@ public class BirthdayService
         msg.To.Add(recipient);
 
         // Send the message
-        SendMessage(msg, smtpClient);
+        _emailMessageSender.SendMessage(msg, smtpClient);
     }
 
     // made protected for testing :-(

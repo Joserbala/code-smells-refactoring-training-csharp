@@ -22,8 +22,8 @@ public class AcceptanceTest
     {
         private readonly List<MailMessage> _messages;
 
-        public BirthdayServiceForTesting(List<MailMessage> messages, IEmployeesRepository employeesRepository) : base(
-            employeesRepository, new EmailMessageSender())
+        public BirthdayServiceForTesting(List<MailMessage> messages, IEmployeesRepository employeesRepository, EmailMessageSender messageSender) : base(
+            employeesRepository, messageSender)
         {
             _messages = messages;
         }
@@ -34,12 +34,28 @@ public class AcceptanceTest
         }
     }
 
+    private class MessageSenderForTesting : EmailMessageSender
+    {
+        private List<MailMessage> _messagesSent;
+
+        public MessageSenderForTesting(List<MailMessage> messagesSent)
+        {
+            _messagesSent = messagesSent;
+        }
+
+        public override void SendMessage(MailMessage msg, SmtpClient smtpClient)
+        {
+            _messagesSent.Add(msg);
+        }
+    }
+
     [SetUp]
     public void SetUp()
     {
         _messagesSent = new List<MailMessage>();
+        var messageSenderForTesting = new MessageSenderForTesting(_messagesSent);
         _service = new BirthdayServiceForTesting(_messagesSent,
-            new FileEmployeesRepository(EmployeesFilePath));
+            new FileEmployeesRepository(EmployeesFilePath), messageSenderForTesting);
     }
 
     [Test]
