@@ -8,15 +8,6 @@ namespace BirthdayGreetingsKata2.Tests.Infrastructure.Repositories;
 public class FileEmployeeRepositoryTest
 {
     [Test]
-    public void Loads_Employees_With_Valid_Path()
-    {
-        IEmployeesRepository employeesRepository =
-            new FileEmployeesRepository(@"D:\code\personal\my-code-smells-refactoring-training-csharp\04-refactoring-to-hexagonal-architecture-2\BirthdayGreetingsKata2.Tests\Infrastructure\Repositories/employee_data1.txt");
-
-        Assert.That(employeesRepository.GetAll().Count, Is.EqualTo(2));
-    }
-
-    [Test]
     public void Fails_When_The_File_Does_Not_Exist()
     {
         IEmployeesRepository employeesRepository = new FileEmployeesRepository("non-existing.file");
