@@ -1,16 +1,19 @@
 using System.Collections.Generic;
 using System.Net.Mail;
 using BirthdayGreetingsKata2.Core;
+using BirthdayGreetingsKata2.Infrastructure;
 
 namespace BirthdayGreetingsKata2.Application;
 
 public class BirthdayService
 {
     private readonly IEmployeesRepository _employeesRepository;
+    private EmailMessageSender _emailMessageSender;
 
     public BirthdayService(IEmployeesRepository employeesRepository)
     {
         _employeesRepository = employeesRepository;
+        _emailMessageSender = new EmailMessageSender();
     }
 
     public void SendGreetings(OurDate date, string smtpHost, int smtpPort, string sender)
