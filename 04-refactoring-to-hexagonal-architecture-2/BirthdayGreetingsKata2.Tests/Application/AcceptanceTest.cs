@@ -16,6 +16,8 @@ public class AcceptanceTest
     private const string From = "sender@here.com";
     private List<MailMessage> _messagesSent;
     private BirthdayService _service;
+    private readonly Employee _john = new("John", "Doe", OurDate("1982/10/08"), "john.doe@foobar.com");
+    private readonly Employee _mary = new("Mary", "Ann", OurDate("1975/03/11"), "mary.ann@foobar.com");
     private const string EmployeesFilePath = "Application/employee_data.txt";
 
     private class GreetingSenderForTesting : EmailGreetingSender
@@ -40,12 +42,9 @@ public class AcceptanceTest
         _messagesSent = new List<MailMessage>();
         var messageSenderForTesting = new GreetingSenderForTesting(_messagesSent, SmtpHost, SmtpPort, From);
 
-        var john = new Employee("John", "Doe", OurDate("1982/10/08"), "john.doe@foobar.com");
-        var mary = new Employee("Mary", "Ann", OurDate("1975/03/11"), "mary.ann@foobar.com");
-
         var mock = Substitute.For<IEmployeesRepository>();
 
-        mock.GetAll().Returns([john, mary]);
+        mock.GetAll().Returns([_john, _mary]);
         _service = new BirthdayService(mock, messageSenderForTesting);
     }
 
