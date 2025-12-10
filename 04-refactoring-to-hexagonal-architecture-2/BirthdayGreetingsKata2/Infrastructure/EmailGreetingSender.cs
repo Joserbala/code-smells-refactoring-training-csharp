@@ -18,15 +18,11 @@ public class EmailGreetingSender : IGreetingSender {
     public void Send(List<GreetingMessage> messages) {
         foreach (var message in messages)
         {
-            var recipient = message.To();
-            var body = message.Text();
-            var subject = message.Subject();
-            this.SendMessage(subject, body, recipient);
+            SendMessage(message);
         }
     }
 
-    private void SendMessage(string subject, string body, string recipient)
-    {
+    private void SendMessage(GreetingMessage message) {
         // Create a mail session
         var smtpClient = new SmtpClient(_smtpHost)
         {
@@ -37,10 +33,10 @@ public class EmailGreetingSender : IGreetingSender {
         var msg = new MailMessage
         {
             From = new MailAddress(_sender),
-            Subject = subject,
-            Body = body
+            Subject = message.Subject(),
+            Body = message.Text()
         };
-        msg.To.Add(recipient);
+        msg.To.Add(message.To());
 
         // Send the message
         SendMessage(msg, smtpClient);
