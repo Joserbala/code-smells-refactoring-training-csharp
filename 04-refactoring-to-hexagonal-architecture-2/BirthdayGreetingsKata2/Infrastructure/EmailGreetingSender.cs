@@ -23,19 +23,11 @@ public class EmailGreetingSender : IGreetingSender {
     }
     
     // made protected for testing :-(
-    protected virtual void Send(MailMessage msg)
-    {
+    protected virtual void Send(MailMessage msg) {
         new SmtpClient(_smtpHost, _smtpPort).Send(msg);
     }
 
     private MailMessage MailMessageFrom(GreetingMessage greeting) {
-        var msg = new MailMessage
-        {
-                From = new MailAddress(_sender),
-                Subject = greeting.Subject(),
-                Body = greeting.Text()
-        };
-        msg.To.Add(greeting.To());
-        return msg;
+        return new MailMessage(_sender, greeting.To(), greeting.Subject(), greeting.Text());
     }
 }
