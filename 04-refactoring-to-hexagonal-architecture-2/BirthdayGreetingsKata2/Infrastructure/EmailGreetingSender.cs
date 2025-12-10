@@ -33,16 +33,9 @@ public class EmailGreetingSender : IGreetingSender {
         return msg;
     }
 
-    private SmtpClient CreateMailSession() {
-        return new SmtpClient(_smtpHost)
-        {
-                Port = _smtpPort
-        };
-    }
-
     // made protected for testing :-(
     protected virtual void Send(MailMessage msg)
     {
-        CreateMailSession().Send(msg);
+        new SmtpClient(_smtpHost, _smtpPort).Send(msg);
     }
 }
