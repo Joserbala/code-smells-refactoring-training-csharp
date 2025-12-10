@@ -4,12 +4,6 @@ namespace BirthdayGreetingsKata2.Infrastructure;
 
 public class EmailMessageSender
 {
-    // made protected for testing :-(
-    public virtual void SendMessage(MailMessage msg, SmtpClient smtpClient)
-    {
-        smtpClient.Send(msg);
-    }
-
     public void SendMessage(string smtpHost, int smtpPort, string sender,
         string subject, string body, string recipient)
     {
@@ -30,5 +24,11 @@ public class EmailMessageSender
 
         // Send the message
         this.SendMessage(msg, smtpClient);
+    }
+
+    // made protected for testing :-(
+    protected virtual void SendMessage(MailMessage msg, SmtpClient smtpClient)
+    {
+        smtpClient.Send(msg);
     }
 }
