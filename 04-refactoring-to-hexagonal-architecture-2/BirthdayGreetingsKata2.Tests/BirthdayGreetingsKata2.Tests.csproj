@@ -34,6 +34,10 @@
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <TargetPath>Infrastructure\Repositories\contains-not-enough-fields.csv</TargetPath>
         </None>
+        <None Update="Infrastructure\Repositories\employee_data1.txt">
+          <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+          <TargetPath>Application\employee_data.txt</TargetPath>
+        </None>
     </ItemGroup>
 
 </Project>
