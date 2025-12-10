@@ -24,22 +24,32 @@ public class EmailGreetingSender : IGreetingSender {
 
     private void SendMessage(GreetingMessage message) {
         // Create a mail session
-        var smtpClient = new SmtpClient(_smtpHost)
-        {
-            Port = _smtpPort
-        };
+        var smtpClient = CreateMailSession();
 
         // Construct the message
-        var msg = new MailMessage
-        {
-            From = new MailAddress(_sender),
-            Subject = message.Subject(),
-            Body = message.Text()
-        };
-        msg.To.Add(message.To());
+        var msg = ConstructMessage(message);
 
         // Send the message
         SendMessage(msg, smtpClient);
+    }
+
+    private MailMessage ConstructMessage(GreetingMessage message) {
+        var msg = new MailMessage
+        {
+                From = new MailAddress(_sender),
+                Subject = message.Subject(),
+                Body = message.Text()
+        };
+        msg.To.Add(message.To());
+        return msg;
+    }
+
+    private SmtpClient CreateMailSession() {
+        var smtpClient = new SmtpClient(_smtpHost)
+        {
+                Port = _smtpPort
+        };
+        return smtpClient;
     }
 
     // made protected for testing :-(
