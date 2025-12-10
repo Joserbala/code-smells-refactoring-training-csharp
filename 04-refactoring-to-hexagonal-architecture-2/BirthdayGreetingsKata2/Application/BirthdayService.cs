@@ -8,9 +8,9 @@ namespace BirthdayGreetingsKata2.Application;
 public class BirthdayService
 {
     private readonly IEmployeesRepository _employeesRepository;
-    private readonly EmailGreetingSender _greetingSender;
+    private readonly IGreetingSender _greetingSender;
 
-    public BirthdayService(IEmployeesRepository employeesRepository, EmailGreetingSender greetingSender)
+    public BirthdayService(IEmployeesRepository employeesRepository, IGreetingSender greetingSender)
     {
         _employeesRepository = employeesRepository;
         _greetingSender = greetingSender;
