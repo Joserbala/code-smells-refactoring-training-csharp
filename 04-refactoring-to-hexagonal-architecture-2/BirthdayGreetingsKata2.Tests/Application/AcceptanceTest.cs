@@ -26,7 +26,7 @@ public class AcceptanceTest
             _messagesSent = messagesSent;
         }
 
-        protected override void SendMessage(MailMessage msg)
+        protected override void Send(MailMessage msg)
         {
             _messagesSent.Add(msg);
         }

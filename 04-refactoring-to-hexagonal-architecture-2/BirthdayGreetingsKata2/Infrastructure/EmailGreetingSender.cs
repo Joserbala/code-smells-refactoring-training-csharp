@@ -15,21 +15,21 @@ public class EmailGreetingSender : IGreetingSender {
         _sender = sender;
     }
 
-    public void Send(List<GreetingMessage> messages) {
-        foreach (var message in messages)
+    public void Send(List<GreetingMessage> greetings) {
+        foreach (var greeting in greetings)
         {
-            SendMessage(ConstructMessage(message));
+            Send(MailMessageFrom(greeting));
         }
     }
 
-    private MailMessage ConstructMessage(GreetingMessage message) {
+    private MailMessage MailMessageFrom(GreetingMessage greeting) {
         var msg = new MailMessage
         {
                 From = new MailAddress(_sender),
-                Subject = message.Subject(),
-                Body = message.Text()
+                Subject = greeting.Subject(),
+                Body = greeting.Text()
         };
-        msg.To.Add(message.To());
+        msg.To.Add(greeting.To());
         return msg;
     }
 
@@ -41,7 +41,7 @@ public class EmailGreetingSender : IGreetingSender {
     }
 
     // made protected for testing :-(
-    protected virtual void SendMessage(MailMessage msg)
+    protected virtual void Send(MailMessage msg)
     {
         CreateMailSession().Send(msg);
     }
