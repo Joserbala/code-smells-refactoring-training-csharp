@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace BirthdayGreetingsKata2.Core;
 
-public class GreetingMessage
+public record GreetingMessage
 {
     private readonly string _to;
     private readonly Greeting _greeting;

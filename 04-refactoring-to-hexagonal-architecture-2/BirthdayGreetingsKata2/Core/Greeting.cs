@@ -1,6 +1,6 @@
 namespace BirthdayGreetingsKata2.Core;
 
-public class Greeting
+public record Greeting
 {
     public string Header { get; }
     public string Content { get; }

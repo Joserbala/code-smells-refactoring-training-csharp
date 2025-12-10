@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net.Mail;
 using BirthdayGreetingsKata2.Application;
 using BirthdayGreetingsKata2.Core;
@@ -18,6 +20,7 @@ public class AcceptanceTest
     private BirthdayService _service;
     private readonly Employee _john = new("John", "Doe", OurDate("1982/10/08"), "john.doe@foobar.com");
     private readonly Employee _mary = new("Mary", "Ann", OurDate("1975/03/11"), "mary.ann@foobar.com");
+    private IGreetingSender _greetingServiceForTesting;
     private const string EmployeesFilePath = "Application/employee_data.txt";
 
     private class GreetingSenderForTesting : EmailGreetingSender
@@ -41,11 +44,12 @@ public class AcceptanceTest
     {
         _messagesSent = new List<MailMessage>();
         var messageSenderForTesting = new GreetingSenderForTesting(_messagesSent, SmtpHost, SmtpPort, From);
+        _greetingServiceForTesting = Substitute.For<IGreetingSender>();
 
         var mock = Substitute.For<IEmployeesRepository>();
 
         mock.GetAll().Returns([_john, _mary]);
-        _service = new BirthdayService(mock, messageSenderForTesting);
+        _service = new BirthdayService(mock, _greetingServiceForTesting);
     }
 
     [Test]
@@ -55,12 +59,8 @@ public class AcceptanceTest
 
         _service.SendGreetings(today);
 
-        Assert.That(_messagesSent, Has.Exactly(1).Items);
-        var message = _messagesSent[0];
-        Assert.That(message.Body, Is.EqualTo("Happy Birthday, dear John!"));
-        Assert.That(message.Subject, Is.EqualTo("Happy Birthday!"));
-        Assert.That(message.To, Has.Exactly(1).Items);
-        Assert.That(message.To[0].Address, Is.EqualTo("john.doe@foobar.com"));
+        _greetingServiceForTesting.Received().Send(Arg.Is<List<GreetingMessage>>(x => x.Count == 1));
+        _greetingServiceForTesting.Received().Send(Arg.Is<List<GreetingMessage>>(x => x.Single().Equals(GreetingMessage.GenerateForSome(new List<Employee> {_john}).Single())));
     }
 
     [Test]
