@@ -23,14 +23,9 @@ public class EmailGreetingSender : IGreetingSender {
     }
 
     private void SendMessage(GreetingMessage message) {
-        // Create a mail session
-        var smtpClient = CreateMailSession();
-
-        // Construct the message
-        var msg = ConstructMessage(message);
-
-        // Send the message
-        SendMessage(msg, smtpClient);
+        var mailSession = CreateMailSession();
+        var mailMessage = ConstructMessage(message);
+        SendMessage(mailMessage, mailSession);
     }
 
     private MailMessage ConstructMessage(GreetingMessage message) {
