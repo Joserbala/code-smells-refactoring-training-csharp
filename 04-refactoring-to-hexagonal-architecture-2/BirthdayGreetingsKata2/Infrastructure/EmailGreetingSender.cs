@@ -4,8 +4,7 @@ using BirthdayGreetingsKata2.Core;
 
 namespace BirthdayGreetingsKata2.Infrastructure;
 
-public class EmailGreetingSender
-{
+public class EmailGreetingSender : IGreetingSender {
     private readonly string _smtpHost;
     private readonly int _smtpPort;
     private readonly string _sender;
