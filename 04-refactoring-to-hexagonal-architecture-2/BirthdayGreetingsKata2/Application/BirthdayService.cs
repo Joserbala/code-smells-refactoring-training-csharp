@@ -18,8 +18,7 @@ public class BirthdayService
 
     public void SendGreetings(OurDate date, string smtpHost, int smtpPort, string sender)
     {
-        _greetingSender.Send(GreetingMessagesFor(EmployeesHavingBirthday(date)),
-            smtpHost, smtpPort, sender);
+        _greetingSender.Send(GreetingMessagesFor(EmployeesHavingBirthday(date)));
     }
 
     private static List<GreetingMessage> GreetingMessagesFor(IEnumerable<Employee> employees)
