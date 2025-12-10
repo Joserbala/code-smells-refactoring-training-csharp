@@ -9,5 +9,4 @@ public class EmailMessageSender
     {
         smtpClient.Send(msg);
     }
-
 }
