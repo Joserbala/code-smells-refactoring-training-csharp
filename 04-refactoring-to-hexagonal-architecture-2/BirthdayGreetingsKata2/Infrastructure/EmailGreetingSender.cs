@@ -23,9 +23,7 @@ public class EmailGreetingSender : IGreetingSender {
     }
 
     private void SendMessage(GreetingMessage message) {
-        var mailSession = CreateMailSession();
-        var mailMessage = ConstructMessage(message);
-        SendMessage(mailMessage, mailSession);
+        SendMessage(ConstructMessage(message), CreateMailSession());
     }
 
     private MailMessage ConstructMessage(GreetingMessage message) {
@@ -40,11 +38,10 @@ public class EmailGreetingSender : IGreetingSender {
     }
 
     private SmtpClient CreateMailSession() {
-        var smtpClient = new SmtpClient(_smtpHost)
+        return new SmtpClient(_smtpHost)
         {
                 Port = _smtpPort
         };
-        return smtpClient;
     }
 
     // made protected for testing :-(
