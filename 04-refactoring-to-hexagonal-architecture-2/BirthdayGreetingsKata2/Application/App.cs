@@ -19,7 +19,7 @@ public class App
         try
         {
             var today = new OurDate(new DateTime());
-            service.SendGreetings(today, Host, SmtpPort, SenderEmailAddress);
+            service.SendGreetings(today);
         }
         catch (Exception e)
         {

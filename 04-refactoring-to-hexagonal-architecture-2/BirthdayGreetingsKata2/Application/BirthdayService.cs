@@ -16,7 +16,7 @@ public class BirthdayService
         _greetingSender = greetingSender;
     }
 
-    public void SendGreetings(OurDate date, string smtpHost, int smtpPort, string sender)
+    public void SendGreetings(OurDate date)
     {
         _greetingSender.Send(GreetingMessagesFor(EmployeesHavingBirthday(date)));
     }
