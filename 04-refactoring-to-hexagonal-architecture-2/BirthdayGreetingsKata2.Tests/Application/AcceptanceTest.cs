@@ -4,6 +4,9 @@ using BirthdayGreetingsKata2.Application;
 using BirthdayGreetingsKata2.Core;
 using BirthdayGreetingsKata2.Infrastructure;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
+using BirthdayGreetingsKata2.Tests.helpers;
+using NSubstitute;
+using NSubstitute.Extensions;
 using NUnit.Framework;
 using static BirthdayGreetingsKata2.Tests.helpers.OurDateFactory;
 
@@ -22,7 +25,9 @@ public class AcceptanceTest
     {
         private readonly List<MailMessage> _messagesSent;
 
-        public GreetingSenderForTesting(List<MailMessage> messagesSent, string smtpHost, int smtpPort, string sender) : base(smtpHost, smtpPort, sender) {
+        public GreetingSenderForTesting(List<MailMessage> messagesSent, string smtpHost, int smtpPort, string sender) :
+            base(smtpHost, smtpPort, sender)
+        {
             _messagesSent = messagesSent;
         }
 
@@ -31,13 +36,20 @@ public class AcceptanceTest
             _messagesSent.Add(msg);
         }
     }
-    
+
     [SetUp]
     public void SetUp()
     {
         _messagesSent = new List<MailMessage>();
         var messageSenderForTesting = new GreetingSenderForTesting(_messagesSent, SmtpHost, SmtpPort, From);
-        _service = new BirthdayService(new FileEmployeesRepository(EmployeesFilePath), messageSenderForTesting);
+
+        var john = new Employee("John", "Doe", OurDate("1982/10/08"), "john.doe@foobar.com");
+        var mary = new Employee("Mary", "Ann", OurDate("1975/03/11"), "mary.ann@foobar.com");
+
+        var mock = Substitute.For<IEmployeesRepository>();
+
+        mock.GetAll().Returns([john, mary]);
+        _service = new BirthdayService(mock, messageSenderForTesting);
     }
 
     [Test]
