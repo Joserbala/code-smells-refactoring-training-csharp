@@ -23,7 +23,7 @@ public class EmailMessageSender
         msg.To.Add(recipient);
 
         // Send the message
-        this.SendMessage(msg, smtpClient);
+        SendMessage(msg, smtpClient);
     }
 
     // made protected for testing :-(
