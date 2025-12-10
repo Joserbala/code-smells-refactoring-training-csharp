@@ -17,11 +17,11 @@ public class AcceptanceTest
     private BirthdayService _service;
     private const string EmployeesFilePath = "Application/employee_data.txt";
 
-    private class MessageSenderForTesting : EmailMessageSender
+    private class GreetingSenderForTesting : EmailGreetingSender
     {
         private readonly List<MailMessage> _messagesSent;
 
-        public MessageSenderForTesting(List<MailMessage> messagesSent)
+        public GreetingSenderForTesting(List<MailMessage> messagesSent)
         {
             _messagesSent = messagesSent;
         }
@@ -36,7 +36,7 @@ public class AcceptanceTest
     public void SetUp()
     {
         _messagesSent = new List<MailMessage>();
-        var messageSenderForTesting = new MessageSenderForTesting(_messagesSent);
+        var messageSenderForTesting = new GreetingSenderForTesting(_messagesSent);
         _service = new BirthdayService(new FileEmployeesRepository(EmployeesFilePath), messageSenderForTesting);
     }
 

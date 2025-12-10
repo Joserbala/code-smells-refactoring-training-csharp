@@ -8,12 +8,12 @@ namespace BirthdayGreetingsKata2.Application;
 public class BirthdayService
 {
     private readonly IEmployeesRepository _employeesRepository;
-    private readonly EmailMessageSender _messageSender;
+    private readonly EmailGreetingSender _greetingSender;
 
-    public BirthdayService(IEmployeesRepository employeesRepository, EmailMessageSender messageSender)
+    public BirthdayService(IEmployeesRepository employeesRepository, EmailGreetingSender greetingSender)
     {
         _employeesRepository = employeesRepository;
-        _messageSender = messageSender;
+        _greetingSender = greetingSender;
     }
 
     public void SendGreetings(OurDate date, string smtpHost, int smtpPort, string sender)
@@ -40,7 +40,7 @@ public class BirthdayService
             var recipient = message.To();
             var body = message.Text();
             var subject = message.Subject();
-            _messageSender.SendMessage(smtpHost, smtpPort, sender, subject, body, recipient);
+            _greetingSender.SendMessage(smtpHost, smtpPort, sender, subject, body, recipient);
         }
     }
 }

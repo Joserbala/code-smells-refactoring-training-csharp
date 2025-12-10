@@ -15,7 +15,7 @@ public class App
     static void Main(string[] args)
     {
         var service = new BirthdayService(
-            new FileEmployeesRepository(EmployeesFilePath), new EmailMessageSender());
+            new FileEmployeesRepository(EmployeesFilePath), new EmailGreetingSender());
         try
         {
             var today = new OurDate(new DateTime());

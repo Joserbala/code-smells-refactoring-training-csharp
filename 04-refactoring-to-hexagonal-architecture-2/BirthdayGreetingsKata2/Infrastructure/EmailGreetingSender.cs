@@ -2,7 +2,7 @@
 
 namespace BirthdayGreetingsKata2.Infrastructure;
 
-public class EmailMessageSender
+public class EmailGreetingSender
 {
     public void SendMessage(string smtpHost, int smtpPort, string sender,
         string subject, string body, string recipient)
