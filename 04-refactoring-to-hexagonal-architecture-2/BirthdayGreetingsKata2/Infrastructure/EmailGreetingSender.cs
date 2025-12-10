@@ -18,12 +18,8 @@ public class EmailGreetingSender : IGreetingSender {
     public void Send(List<GreetingMessage> messages) {
         foreach (var message in messages)
         {
-            SendMessage(message);
+            SendMessage(ConstructMessage(message));
         }
-    }
-
-    private void SendMessage(GreetingMessage message) {
-        SendMessage(ConstructMessage(message), CreateMailSession());
     }
 
     private MailMessage ConstructMessage(GreetingMessage message) {
@@ -45,9 +41,8 @@ public class EmailGreetingSender : IGreetingSender {
     }
 
     // made protected for testing :-(
-
-    protected virtual void SendMessage(MailMessage msg, SmtpClient smtpClient)
+    protected virtual void SendMessage(MailMessage msg)
     {
-        smtpClient.Send(msg);
+        CreateMailSession().Send(msg);
     }
 }
