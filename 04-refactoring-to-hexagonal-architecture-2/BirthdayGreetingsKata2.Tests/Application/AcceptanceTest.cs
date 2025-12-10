@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Net.Mail;
 using BirthdayGreetingsKata2.Application;
 using BirthdayGreetingsKata2.Core;
+using BirthdayGreetingsKata2.Infrastructure;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
 using NUnit.Framework;
 using static BirthdayGreetingsKata2.Tests.helpers.OurDateFactory;
@@ -22,7 +23,7 @@ public class AcceptanceTest
         private readonly List<MailMessage> _messages;
 
         public BirthdayServiceForTesting(List<MailMessage> messages, IEmployeesRepository employeesRepository) : base(
-            employeesRepository)
+            employeesRepository, new EmailMessageSender())
         {
             _messages = messages;
         }

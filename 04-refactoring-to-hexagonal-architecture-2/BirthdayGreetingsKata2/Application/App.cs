@@ -1,5 +1,6 @@
 using System;
 using BirthdayGreetingsKata2.Core;
+using BirthdayGreetingsKata2.Infrastructure;
 using BirthdayGreetingsKata2.Infrastructure.Repositories;
 
 namespace BirthdayGreetingsKata2.Application;
@@ -14,7 +15,7 @@ public class App
     static void Main(string[] args)
     {
         var service = new BirthdayService(
-            new FileEmployeesRepository(EmployeesFilePath));
+            new FileEmployeesRepository(EmployeesFilePath), new EmailMessageSender());
         try
         {
             var today = new OurDate(new DateTime());

@@ -10,10 +10,10 @@ public class BirthdayService
     private readonly IEmployeesRepository _employeesRepository;
     private EmailMessageSender _emailMessageSender;
 
-    public BirthdayService(IEmployeesRepository employeesRepository)
+    public BirthdayService(IEmployeesRepository employeesRepository, EmailMessageSender messageSender)
     {
         _employeesRepository = employeesRepository;
-        _emailMessageSender = new EmailMessageSender();
+        _emailMessageSender = messageSender;
     }
 
     public void SendGreetings(OurDate date, string smtpHost, int smtpPort, string sender)
